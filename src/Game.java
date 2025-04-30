@@ -13,7 +13,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
     private int xShotPos;
     private int yShotPos;
     private boolean hasClicked;
-    private static final int DELAY_IN_MILLISEC = 20;
+    private static final int DELAY_IN_MILLISEC = 30;
     Timer clock;
 
     public Game(){
@@ -52,35 +52,38 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
 
     public void playGame(){
         // get shot information
-        // go through shot + action of saving
+        state = 1;
+//        getShotInfo();
+//        // go through shot + action of saving
+//        playShot();
     }
 
     public void getShotInfo(){
         state = 1;
         // print instructions
-        // get speed meter
+//        // get speed meter
+//        while(hasClicked == false){
+//        }
+//        hasClicked = false;
+//
 
     }
 
     public void playShot(){
         state = 2;
         // move ball
-        if(xShotPos < ball.getX()){
-            ball.setDx(-ball.getDx());
-        }
 
-        if(yShotPos < ball.getY()){
-            ball.setDy(-ball.getDy());
-        }
-
-        while (ball.getX() + ball.getDx() < xShotPos)
-        ball.move();
         // respond to keeper movements
 
     }
 
     public static void main(String[] args) {
         Game g = new Game();
+        g.playGame();
+    }
+
+    public void determineSpeeds(){
+
     }
 
     @Override
@@ -88,6 +91,14 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
         if(state == 1){
             xShotPos = e.getX();
             yShotPos = e.getY();
+            state = 2;
+            System.out.println("clicked once");
+            return;
+        }
+        if(state == 2){
+            // get speed arrow position
+            state = 3;
+            System.out.println("clicked twice");
         }
     }
 
@@ -123,8 +134,30 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(state == 2){
+
+        if(state == 3){
+            determineSpeeds();
+//            if(xShotPos < ball.getX()){
+//                ball.setDx(-ball.getDx());
+//            }
+//
+//            if(yShotPos < ball.getY()){
+//                ball.setDy(-ball.getDy());
+//            }
             ball.move();
+            if(ball.getDx() < 0 && ball.getX() < xShotPos){
+                ball.setX(xShotPos);
+            }
+            if(ball.getDx() > 0 && ball.getX() > xShotPos){
+                ball.setX(xShotPos);
+            }
+            if(ball.getDy() < 0 && ball.getY() < yShotPos){
+                ball.setY(yShotPos);
+            }
+            if(ball.getDy() > 0 && ball.getY() > yShotPos){
+                ball.setY(yShotPos);
+            }
+            window.repaint();
         }
 
     }
