@@ -12,9 +12,10 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
     private int state;
     private int xShotPos;
     private int yShotPos;
-    private boolean hasClicked;
     private static final int DELAY_IN_MILLISEC = 30;
     Timer clock;
+    public static final int SHOT_TIME = 2000;
+    private int shotPower;
 
     public Game(){
         state = -1;
@@ -26,7 +27,6 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
         this.arrow = new SpeedArrow(window);
         this.goalie = new Goalie(window);
         state = 0;
-        hasClicked = false;
 
         clock = new Timer(DELAY_IN_MILLISEC, this);
         clock.start();
@@ -82,9 +82,6 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
         g.playGame();
     }
 
-    public void determineSpeeds(){
-
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -97,6 +94,9 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
         }
         if(state == 2){
             // get speed arrow position
+
+            // call determine speed func
+            ball.determineSpeeds(xShotPos, yShotPos, SHOT_TIME/DELAY_IN_MILLISEC);
             state = 3;
             System.out.println("clicked twice");
         }
@@ -136,7 +136,6 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
     public void actionPerformed(ActionEvent e) {
 
         if(state == 3){
-            determineSpeeds();
 //            if(xShotPos < ball.getX()){
 //                ball.setDx(-ball.getDx());
 //            }
@@ -145,18 +144,15 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
 //                ball.setDy(-ball.getDy());
 //            }
             ball.move();
-            if(ball.getDx() < 0 && ball.getX() < xShotPos){
-                ball.setX(xShotPos);
+            if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10){
+                // CHANGE THIS TO BE DEPENDENT ON THE STATE
+                ball.setDx(0);
             }
-            if(ball.getDx() > 0 && ball.getX() > xShotPos){
-                ball.setX(xShotPos);
+            if (ball.getY() < yShotPos + 10 && ball.getY() > yShotPos - 10){
+                // CHANGE THIS TO BE DEPENDENT ON THE STATE
+                ball.setDy(0);
             }
-            if(ball.getDy() < 0 && ball.getY() < yShotPos){
-                ball.setY(yShotPos);
-            }
-            if(ball.getDy() > 0 && ball.getY() > yShotPos){
-                ball.setY(yShotPos);
-            }
+            // some way to stop repainting
             window.repaint();
         }
 

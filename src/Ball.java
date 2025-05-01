@@ -62,4 +62,12 @@ public class Ball {
     public void setY(int y) {
         this.y = y;
     }
+
+    public void determineSpeeds(int xFinal, int yFinal, int ballSpeed){
+        int xDiff = xFinal - x;
+        int yDiff = yFinal - y;
+
+        dx = xDiff / ballSpeed;
+        dy = yDiff / ballSpeed;
+    }
 }
