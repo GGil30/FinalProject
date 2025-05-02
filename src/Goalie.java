@@ -7,8 +7,8 @@ public class Goalie {
     private GameView window;
     private Image gkImage;
     private Image gloves;
-    public static final int GKXSIZE = (int)((4.0/5)*(450));
-    public static final int GKYSIZE = (int)((4.0/5)*360);
+    public static final int GKXSIZE = (int)((4.0/5)*(311));
+    public static final int GKYSIZE = (int)((4.0/5)*341);
     private int x;
     private int y;
 

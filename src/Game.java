@@ -135,7 +135,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(state == 3){
+        if(state == 3) {
 //            if(xShotPos < ball.getX()){
 //                ball.setDx(-ball.getDx());
 //            }
@@ -144,11 +144,11 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
 //                ball.setDy(-ball.getDy());
 //            }
             ball.move();
-            if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10){
+            if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
                 ball.setDx(0);
             }
-            if (ball.getY() < yShotPos + 10 && ball.getY() > yShotPos - 10){
+            if (ball.getY() < yShotPos + 10 && ball.getY() > yShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
                 ball.setDy(0);
             }

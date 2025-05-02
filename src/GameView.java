@@ -35,7 +35,7 @@ public class GameView extends JFrame {
     public void paintSetup(Graphics g){
         game.getGoalie().draw(g);
         game.getBall().draw(g);
-
+        game.getArrow().draw(g);
     }
 
 
