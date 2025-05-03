@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Game implements MouseListener, MouseMotionListener, ActionListener {
+public class Game implements MouseListener, MouseMotionListener, ActionListener, KeyListener {
 
     // Variables
     private GameView window;
@@ -12,9 +12,9 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
     private int state;
     private int xShotPos;
     private int yShotPos;
-    private static final int DELAY_IN_MILLISEC = 30;
+    private static final int DELAY_IN_MILLISEC = 10;
     Timer clock;
-    public static final int SHOT_TIME = 2000;
+    public static final int SHOT_TIME = 1000;
     private int shotPower;
 
     public Game(){
@@ -94,9 +94,10 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
         }
         if(state == 2){
             // get speed arrow position
+            shotPower = arrow.calcPower();
 
             // call determine speed func
-            ball.determineSpeeds(xShotPos, yShotPos, SHOT_TIME/DELAY_IN_MILLISEC);
+            ball.determineSpeeds(xShotPos, yShotPos, SHOT_TIME/DELAY_IN_MILLISEC, shotPower);
             state = 3;
             System.out.println("clicked twice");
         }
@@ -134,15 +135,11 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (state == 2){
+            arrow.move();
+            window.repaint();
+        }
         if(state == 3) {
-//            if(xShotPos < ball.getX()){
-//                ball.setDx(-ball.getDx());
-//            }
-//
-//            if(yShotPos < ball.getY()){
-//                ball.setDy(-ball.getDy());
-//            }
             ball.move();
             if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
@@ -155,6 +152,21 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener 
             // some way to stop repainting
             window.repaint();
         }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }

@@ -11,6 +11,7 @@ public class Goalie {
     public static final int GKYSIZE = (int)((4.0/5)*341);
     private int x;
     private int y;
+    private int speed = 15;
 
 
     public Goalie(GameView window){
@@ -27,4 +28,13 @@ public class Goalie {
     public void draw(Graphics g){
         g.drawImage(gkImage, x, y, GKXSIZE, GKYSIZE, window);
     }
+
+    public void moveDown(){
+        y+= speed;
+    }
+    public void moveDown(){
+        y+= speed;
+    }
+
+
 }
