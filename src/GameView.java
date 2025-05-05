@@ -23,8 +23,11 @@ public class GameView extends JFrame {
 
     public void paint(Graphics g){
         paintBackground(g);
-        if(game.getState()>=0) {
+        if(game.getState()>=0 && game.getState() < 6) {
             paintSetup(g);
+        }
+        else if(game.getState() == 6){
+            paintEnding(g);
         }
     }
 
@@ -36,7 +39,11 @@ public class GameView extends JFrame {
         game.getGoalie().draw(g);
         game.getBall().draw(g);
         game.getArrow().draw(g);
+        game.getScoreboard().draw(g);
     }
 
+    public void paintEnding(Graphics g){
+        // to implement
+    }
 
 }

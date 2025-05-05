@@ -9,6 +9,8 @@ public class Ball {
     public static final int BALLSIZE = 50;
     private int x;
     private int y;
+    private final int startX = (int) (GameView.WINDOW_WIDTH/2 - (0.5)*(BALLSIZE));;
+    private final int startY = (int) (GameView.WINDOW_HEIGHT*(7.5/8) - (0.5)*(BALLSIZE));
     private int dx;
     private int dy;
 
@@ -18,8 +20,8 @@ public class Ball {
         dx = 15;
         dy = 15;
         ballImage = new ImageIcon("Resources/ball.png").getImage();
-        x = (int) (GameView.WINDOW_WIDTH/2 - (0.5)*(BALLSIZE));
-        y = (int) (GameView.WINDOW_HEIGHT*(7.5/8) - (0.5)*(BALLSIZE));
+        x = startX;
+        y = startY;
     }
 
     public void draw(Graphics g){
@@ -29,6 +31,11 @@ public class Ball {
     public void move(){
             x += dx;
             y += dy;
+    }
+
+    public void reset(){
+        x = startX;
+        y = startY;
     }
 
     public int getX() {

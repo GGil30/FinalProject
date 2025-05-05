@@ -11,6 +11,8 @@ public class Goalie {
     public static final int GKYSIZE = (int)((4.0/5)*341);
     private int x;
     private int y;
+    private final int startX = (int)(GameView.WINDOW_WIDTH/2 - (1.0/2)*(GKXSIZE));
+    private final int startY = (int)(GameView.WINDOW_WIDTH/(4.5));
     private int speed = 15;
 
 
@@ -20,8 +22,8 @@ public class Goalie {
         gkImage = new ImageIcon("Resources/goalie.png").getImage();
         gloves = new ImageIcon("Resources/glovesCopy.jpg").getImage();
 
-        x = (int)(GameView.WINDOW_WIDTH/2 - (1.0/2)*(GKXSIZE));
-        y = (int)(GameView.WINDOW_WIDTH/(4.5));
+        x = startX;
+        y = startY;
 
     }
 
@@ -29,11 +31,24 @@ public class Goalie {
         g.drawImage(gkImage, x, y, GKXSIZE, GKYSIZE, window);
     }
 
+    public void reset(){
+        x = startX;
+        y = startY;
+    }
+
     public void moveDown(){
         y+= speed;
     }
-    public void moveDown(){
-        y+= speed;
+    public void moveUp(){
+        y-= speed;
+    }
+
+    public void moveLeft(){
+        x-= speed;
+    }
+
+    public void moveRight(){
+        x+= speed;
     }
 
 

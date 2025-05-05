@@ -16,17 +16,29 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
     Timer clock;
     public static final int SHOT_TIME = 1000;
     private int shotPower;
+    private boolean xReached;
+    private boolean yReached;
+    private boolean isGoal;
+    private int p1ShotCounter;
+    private int p2ShotCounter;
+    private int totalShotCounter;
 
     public Game(){
         state = -1;
         this.window = new GameView(this);
         this.window.addMouseListener(this);
         this.window.addMouseMotionListener(this);
+        window.addKeyListener(this);
 
         this.ball = new Ball(window);
         this.arrow = new SpeedArrow(window);
         this.goalie = new Goalie(window);
+        this.scoreboard = new Scoreboard(window, this);
         state = 0;
+
+        p1ShotCounter = 0;
+        p2ShotCounter = 0;
+        totalShotCounter = 0;
 
         clock = new Timer(DELAY_IN_MILLISEC, this);
         clock.start();
@@ -52,29 +64,60 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
 
     public void playGame(){
         // get shot information
-        state = 1;
-//        getShotInfo();
+        playShot();
+
 //        // go through shot + action of saving
-//        playShot();
     }
 
-    public void getShotInfo(){
-        state = 1;
-        // print instructions
-//        // get speed meter
-//        while(hasClicked == false){
-//        }
-//        hasClicked = false;
-//
-
+    public void endGame(){
+        state = 6;
+        window.repaint();
     }
 
     public void playShot(){
-        state = 2;
-        // move ball
+        state = 1;
+        xReached = false;
+        yReached = false;
+        isGoal = true;
+        ball.reset();
+        goalie.reset();
+    }
 
-        // respond to keeper movements
+    public void determineGoal(){
+        if (ball.getX() < 224 || ball.getX() + Ball.BALLSIZE > 1000 || ball.getY() + Ball.BALLSIZE > 542 || ball.getY() <
+                162){
+            isGoal = false;
+        }
+        System.out.println(isGoal);
+        totalShotCounter++;
+        if(totalShotCounter%2 == 1){
+            p1ShotCounter++;
+            scoreboard.getPlayer1Score()[p1ShotCounter - 1] = isGoal;
+            System.out.println(scoreboard.getPlayer1Score()[p1ShotCounter - 1]);
+        }
+        else{
+            p2ShotCounter++;
+            scoreboard.getPlayer2Score()[p2ShotCounter - 1] = isGoal;
+        }
+        if(totalShotCounter < 10){
+            playShot();
+        }
+        else{
+            endGame();
+        }
 
+    }
+
+    public int getP1ShotCounter() {
+        return p1ShotCounter;
+    }
+
+    public int getP2ShotCounter() {
+        return p2ShotCounter;
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 
     public static void main(String[] args) {
@@ -99,7 +142,11 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
             // call determine speed func
             ball.determineSpeeds(xShotPos, yShotPos, SHOT_TIME/DELAY_IN_MILLISEC, shotPower);
             state = 3;
-            System.out.println("clicked twice");
+            return;
+        }
+        if(state == 3){
+            state = 4;
+            System.out.println("clicked 3 times");
         }
     }
 
@@ -139,19 +186,26 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
             arrow.move();
             window.repaint();
         }
-        if(state == 3) {
+        if(state == 4) {
             ball.move();
             if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
                 ball.setDx(0);
+                xReached = true;
             }
             if (ball.getY() < yShotPos + 10 && ball.getY() > yShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
                 ball.setDy(0);
+                yReached = true;
+            }
+            if(xReached && yReached){ // CHANGE THIS TO INCLUDE IF THE BALL IS SAVED
+                state = 5;
+                determineGoal();
             }
             // some way to stop repainting
             window.repaint();
         }
+
 
     }
 
@@ -162,7 +216,23 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if(state == 4){
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    goalie.moveLeft();
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    goalie.moveRight();
+                    break;
+                case KeyEvent.VK_UP:
+                    goalie.moveUp();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    goalie.moveDown();
+                    break;
+            }
+            window.repaint();
+        }
     }
 
     @Override
