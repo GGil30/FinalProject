@@ -188,6 +188,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         }
         if(state == 4) {
             ball.move();
+            goalie.move();
             if (ball.getX() < xShotPos + 10 && ball.getX() > xShotPos - 10) {
                 // CHANGE THIS TO BE DEPENDENT ON THE STATE
                 ball.setDx(0);
@@ -219,16 +220,16 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         if(state == 4){
             switch(e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    goalie.moveLeft();
+                    goalie.setDx(-15);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    goalie.moveRight();
+                    goalie.setDx(15);;
                     break;
                 case KeyEvent.VK_UP:
-                    goalie.moveUp();
+                    goalie.setDy(-15);
                     break;
                 case KeyEvent.VK_DOWN:
-                    goalie.moveDown();
+                    goalie.setDy(15);
                     break;
             }
             window.repaint();
@@ -237,6 +238,22 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if(state == 4){
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    goalie.setDx(0);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    goalie.setDx(0);;
+                    break;
+                case KeyEvent.VK_UP:
+                    goalie.setDy(0);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    goalie.setDy(0);
+                    break;
+            }
+            window.repaint();
+        }
     }
 }

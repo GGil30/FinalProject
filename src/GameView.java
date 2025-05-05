@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class GameView extends JFrame {
 
@@ -19,9 +20,28 @@ public class GameView extends JFrame {
         this.setTitle("PK Shootout");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
+        createBufferStrategy(2);
     }
 
+
+
     public void paint(Graphics g){
+        BufferStrategy bf = this.getBufferStrategy();
+        if (bf == null)
+            return;
+        Graphics g2 = null;
+        try {
+            g2 = bf.getDrawGraphics();
+            myPaint(g2);
+        }
+        finally {
+            g2.dispose();
+        }
+        bf.show();
+        Toolkit.getDefaultToolkit().sync();
+    }
+
+    public void myPaint(Graphics g){
         paintBackground(g);
         if(game.getState()>=0 && game.getState() < 6) {
             paintSetup(g);

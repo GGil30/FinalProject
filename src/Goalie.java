@@ -14,6 +14,8 @@ public class Goalie {
     private final int startX = (int)(GameView.WINDOW_WIDTH/2 - (1.0/2)*(GKXSIZE));
     private final int startY = (int)(GameView.WINDOW_WIDTH/(4.5));
     private int speed = 15;
+    private int dx;
+    private int dy;
 
 
     public Goalie(GameView window){
@@ -24,6 +26,9 @@ public class Goalie {
 
         x = startX;
         y = startY;
+
+        dx = 0;
+        dy = 0;
 
     }
 
@@ -36,20 +41,16 @@ public class Goalie {
         y = startY;
     }
 
-    public void moveDown(){
-        y+= speed;
-    }
-    public void moveUp(){
-        y-= speed;
+    public void move(){
+        x += dx;
+        y += dy;
     }
 
-    public void moveLeft(){
-        x-= speed;
+    public void setDx(int dx) {
+        this.dx = dx;
     }
 
-    public void moveRight(){
-        x+= speed;
+    public void setDy(int dy) {
+        this.dy = dy;
     }
-
-
 }
