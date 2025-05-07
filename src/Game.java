@@ -12,7 +12,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
     private int state;
     private int xShotPos;
     private int yShotPos;
-    private static final int DELAY_IN_MILLISEC = 10;
+    private static final int DELAY_IN_MILLISEC = 60;
     Timer clock;
     public static final int SHOT_TIME = 1000;
     private int shotPower;

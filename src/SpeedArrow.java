@@ -25,7 +25,7 @@ public class SpeedArrow {
         arrowImage = new ImageIcon("Resources/arrow.png").getImage();
         meter = new ImageIcon("Resources/meter.png").getImage();
         arrowX = arrowStartX;
-        arrowDX = 5;
+        arrowDX = 20;
     }
 
     public void move(){
@@ -41,6 +41,9 @@ public class SpeedArrow {
         System.out.println(power);
         if (power < 2){
             power = 1;
+        }
+        else if(power > 9){
+            power = 9;
         }
         return power;
     }

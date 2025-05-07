@@ -57,6 +57,8 @@ public class Goalie {
     public void reset(){
         x = startX;
         y = startY;
+        dx = 0;
+        dy = 0;
     }
 
     public void move(){
