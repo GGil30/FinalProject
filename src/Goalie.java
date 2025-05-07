@@ -13,9 +13,18 @@ public class Goalie {
     private int y;
     private final int startX = (int)(GameView.WINDOW_WIDTH/2 - (1.0/2)*(GKXSIZE));
     private final int startY = (int)(GameView.WINDOW_WIDTH/(4.5));
-    private int speed = 15;
     private int dx;
     private int dy;
+    private int handsMinX;
+    private int handsMaxX;
+    private int handsMaxY;
+    private int handsMinY;
+    private int bodyMinX;
+    private int bodyMaxX;
+    private int bodyMinY;
+    private int bodyMaxY;
+
+
 
 
     public Goalie(GameView window){
@@ -26,6 +35,15 @@ public class Goalie {
 
         x = startX;
         y = startY;
+
+        handsMinX = startX + (int)((0.8)*4);
+        handsMaxX = handsMinX + (int)((0.8)*(307));
+        handsMinY = startY + (int)(0.8*(6));
+        handsMaxY = handsMinY + (int)(0.8*84);
+        bodyMinX = startX + (int)(0.8*56);
+        bodyMaxX = bodyMinX + (int)(0.8*170);
+        bodyMinY = startY + (int)(0.8*90);
+        bodyMaxY = bodyMinY + (int)(0.8*247);
 
         dx = 0;
         dy = 0;
@@ -44,6 +62,14 @@ public class Goalie {
     public void move(){
         x += dx;
         y += dy;
+        handsMinX += dx;
+        handsMaxX += dx;
+        handsMinY += dy;
+        handsMaxY += dy;
+        bodyMinX += dx;
+        bodyMaxX += dy;
+        bodyMinY += dy;
+        bodyMaxY += dy;
     }
 
     public void setDx(int dx) {
@@ -52,5 +78,37 @@ public class Goalie {
 
     public void setDy(int dy) {
         this.dy = dy;
+    }
+
+    public int getHandsMinX() {
+        return handsMinX;
+    }
+
+    public int getHandsMaxX() {
+        return handsMaxX;
+    }
+
+    public int getHandsMaxY() {
+        return handsMaxY;
+    }
+
+    public int getHandsMinY() {
+        return handsMinY;
+    }
+
+    public int getBodyMinX() {
+        return bodyMinX;
+    }
+
+    public int getBodyMaxX() {
+        return bodyMaxX;
+    }
+
+    public int getBodyMinY() {
+        return bodyMinY;
+    }
+
+    public int getBodyMaxY() {
+        return bodyMaxY;
     }
 }

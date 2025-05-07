@@ -22,6 +22,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
     private int p1ShotCounter;
     private int p2ShotCounter;
     private int totalShotCounter;
+    boolean saved;
 
     public Game(){
         state = -1;
@@ -39,6 +40,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         p1ShotCounter = 0;
         p2ShotCounter = 0;
         totalShotCounter = 0;
+        saved = false;
 
         clock = new Timer(DELAY_IN_MILLISEC, this);
         clock.start();
@@ -78,13 +80,17 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         state = 1;
         xReached = false;
         yReached = false;
+        saved = false;
         isGoal = true;
         ball.reset();
         goalie.reset();
     }
 
     public void determineGoal(){
-        if (ball.getX() < 224 || ball.getX() + Ball.BALLSIZE > 1000 || ball.getY() + Ball.BALLSIZE > 542 || ball.getY() <
+        if(saved){
+            isGoal = false;
+        }
+        else if (ball.getX() < 224 || ball.getX() + Ball.BALLSIZE > 1000 || ball.getY() + Ball.BALLSIZE > 542 || ball.getY() <
                 162){
             isGoal = false;
         }
@@ -199,6 +205,14 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
                 ball.setDy(0);
                 yReached = true;
             }
+            if(((ball.getX() + Ball.BALLSIZE >= goalie.getHandsMinX() && ball.getX() <= goalie.getHandsMaxX()) && ((ball.getY() + Ball.BALLSIZE >=
+                    goalie.getHandsMinY()) && (ball.getY() <= goalie.getHandsMaxY()) )) || (((ball.getX() + Ball.BALLSIZE
+            >= goalie.getBodyMinX()) && (ball.getX() <= goalie.getBodyMaxX())) && ((ball.getY() + Ball.BALLSIZE >= goalie.getBodyMinY()) &&
+                    (ball.getY() <= goalie.getBodyMaxY())))){
+                saved = true;
+                state = 5;
+                determineGoal();
+            }
             if(xReached && yReached){ // CHANGE THIS TO INCLUDE IF THE BALL IS SAVED
                 state = 5;
                 determineGoal();
@@ -220,16 +234,16 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         if(state == 4){
             switch(e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    goalie.setDx(-15);
+                    goalie.setDx(-7);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    goalie.setDx(15);;
+                    goalie.setDx(7);;
                     break;
                 case KeyEvent.VK_UP:
-                    goalie.setDy(-15);
+                    goalie.setDy(-7);
                     break;
                 case KeyEvent.VK_DOWN:
-                    goalie.setDy(15);
+                    goalie.setDy(7);
                     break;
             }
             window.repaint();
