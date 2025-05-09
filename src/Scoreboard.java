@@ -55,6 +55,9 @@ public class Scoreboard {
         }
     }
 
+//    public int determineWinner(){
+//
+//    }
     public boolean[] getPlayer1Score() {
         return player1Score;
     }

@@ -29,8 +29,10 @@ public class Ball {
     }
 
     public void move(){
-            x += dx;
-            y += dy;
+//            x += dx;
+//            y += dy;
+        x += 15;
+        y -= 15;
     }
 
     public void reset(){
@@ -75,6 +77,8 @@ public class Ball {
         int yDiff = yFinal - y;
 
         dx = (xDiff / baseSpeed * (power));
+        System.out.println(dx);
         dy = (yDiff / baseSpeed * (power));
+        System.out.println(dy);
     }
 }
