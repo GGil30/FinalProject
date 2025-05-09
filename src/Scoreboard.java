@@ -23,7 +23,7 @@ public class Scoreboard {
     }
 
     public void draw(Graphics g){
-        g.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        g.setFont(GameView.font);
         g.setColor(Color.WHITE);
         g.drawString("Player One:", p1X, textY);
         g.drawString("Player Two:", p2X, textY);

@@ -12,7 +12,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
     private int state;
     private int xShotPos;
     private int yShotPos;
-    private static final int DELAY_IN_MILLISEC = 60;
+    private static final int DELAY_IN_MILLISEC = 30;
     Timer clock;
     public static final int SHOT_TIME = 1000;
     private int shotPower;
@@ -35,7 +35,6 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
         this.arrow = new SpeedArrow(window);
         this.goalie = new Goalie(window);
         this.scoreboard = new Scoreboard(window, this);
-        state = 0;
 
         p1ShotCounter = 0;
         p2ShotCounter = 0;
@@ -66,7 +65,7 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
 
     public void playGame(){
         // get shot information
-        playShot();
+        // playShot();
 
 //        // go through shot + action of saving
     }
@@ -134,6 +133,12 @@ public class Game implements MouseListener, MouseMotionListener, ActionListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(state == -1){
+            state = 0;
+            window.repaint();
+            playShot();
+            return;
+        }
         if(state == 1){
             xShotPos = e.getX();
             yShotPos = e.getY();
